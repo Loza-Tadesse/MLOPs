@@ -1,3 +1,28 @@
-ElasticNet:
-  alpha: 0.6
-  l1_ratio: 0.4
+RandomForest:
+  n_estimators: 100
+  max_depth: 20
+  min_samples_split: 5
+
+DeepLearning:
+  hidden_layers: [128, 64, 32]  # Larger network for 1900+ samples
+  dropout_rate: 0.2  # Moderate dropout
+  learning_rate: 0.001  # Standard LR
+  batch_size: 32  # Standard batch size
+  epochs: 100  # More epochs
+  early_stopping_patience: 15
+  model_type: "pytorch"  # "pytorch" or "tensorflow"
+
+LSTM:
+  hidden_size: 128  # LSTM hidden state size
+  num_layers: 2  # Number of LSTM layers
+  dropout_rate: 0.2  # Dropout rate
+  learning_rate: 0.0005  # Lower LR for LSTM
+  batch_size: 32  # Batch size
+  epochs: 150  # More epochs for LSTM
+  early_stopping_patience: 20  # More patience for LSTM
+  sequence_length: 10  # Number of time steps to look back
+
+CryptoSettings:
+  prediction_horizon: "24h"  # "1h" or "24h"
+  cryptocurrencies: ["bitcoin", "ethereum", "cardano", "solana", "chainlink"]
+  features_to_use: ["price", "volume", "rsi", "sma_7", "sma_14", "ema_7", "bb_upper", "bb_lower", "volatility", "price_position"]
