@@ -1,19 +1,38 @@
 COLUMNS:
-  fixed acidity: float64
-  volatile acidity: float64
-  citric acid: float64
-  residual sugar: float64
-  chlorides: float64
-  free sulfur dioxide: float64
-  total sulfur dioxide: float64
-  density: float64
-  pH: float64
-  sulphates: float64
-  alcohol: float64
-  quality: int64
+  price: float64
+  volume: float64
+  market_cap: float64
+  sma_7: float64
+  sma_14: float64
+  sma_30: float64
+  ema_7: float64
+  ema_14: float64
+  rsi: float64
+  bb_middle: float64
+  bb_upper: float64
+  bb_lower: float64
+  price_change_1h: float64
+  price_change_24h: float64
+  price_change_7d: float64
+  volume_sma: float64
+  volume_ratio: float64
+  volatility: float64
+  high_14d: float64
+  low_14d: float64
+  price_position: float64
+  crypto_symbol: object
+  target_price_1h: float64
+  target_price_5min: float64
+  target_price_24h: float64
+  target_direction_5min: int64
+  target_direction_1h: int64
+  target_direction_24h: int64
+  target_change_5min: float64
+  target_change_1h: float64
+  target_change_24h: float64
 
 
 TARGET_COLUMN:
-  name: quality
+  name: target_price_5min
   
 
