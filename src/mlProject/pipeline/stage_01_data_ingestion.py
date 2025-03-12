@@ -1,9 +1,9 @@
 from mlProject.config.configuration import ConfigurationManager
-from mlProject.components.data_ingestion import DataIngestion
+from mlProject.components.crypto_data_ingestion import CryptoDataIngestion
 from mlProject import logger
 
 
-STAGE_NAME = "Data Ingestion stage"
+STAGE_NAME = "Crypto Data Ingestion stage"
 
 
 class DataIngestionTrainingPipeline:
@@ -13,8 +13,10 @@ class DataIngestionTrainingPipeline:
     def main(self):
         config = ConfigurationManager()
         data_ingestion_config = config.get_data_ingestion_config()
-        data_ingestion = DataIngestion(config=data_ingestion_config)
-        data_ingestion.download_file()
+        cryptocurrencies = config.get_cryptocurrencies()
+        
+        data_ingestion = CryptoDataIngestion(config=data_ingestion_config)
+        data_ingestion.download_file(cryptocurrencies=cryptocurrencies)
         data_ingestion.extract_zip_file()
 
 
