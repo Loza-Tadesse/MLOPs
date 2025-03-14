@@ -57,6 +57,6 @@ class ModelEvaluation:
                 # please refer to the doc for more information:
                 # https://mlflow.org/docs/latest/model-registry.html#api-workflow
                 mlflow.sklearn.log_model(
-                    model, "model", registered_model_name="ElasticnetModel")
+                    model, "model", registered_model_name="CryptoPredictModel")
             else:
                 mlflow.sklearn.log_model(model, "model")
