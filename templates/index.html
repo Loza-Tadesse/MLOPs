@@ -4,50 +4,107 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-    <meta name="description" content="" />
+    <meta name="description" content="CryptoPredict - AI-Powered Cryptocurrency Price Prediction" />
     <meta name="author" content="" />
-    <title>Web App</title>
-    <link rel="icon" type="image/x-icon" href="static/assets/favicon.ico" />
+    <title>CryptoPredict - AI Crypto Price Prediction</title>
+    <link rel="icon" type="image/x-icon" href="/static/assets/favicon.ico" />
     <!-- Font Awesome icons (free version)-->
-    <script src="https://use.fontawesome.com/releases/v5.15.3/js/all.js" crossorigin="anonymous"></script>
+    <script src="https://use.fontawesome.com/releases/v6.0.0/js/all.js" crossorigin="anonymous"></script>
     <!-- Google fonts-->
-    <link href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" rel="stylesheet"
-        type="text/css" />
-    <link
-        href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800"
-        rel="stylesheet" type="text/css" />
-    <!-- Core theme CSS (includes Bootstrap)-->
-    <link href="static/css/styles.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Custom CSS -->
+    <link href="/static/css/crypto-styles.css" rel="stylesheet" />
+    <style>
+        .crypto-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 2rem 0;
+        }
+        .crypto-card {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            padding: 2rem;
+            margin: 1rem 0;
+        }
+        .price-display {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #2ecc71;
+        }
+        .price-change {
+            font-size: 1.2rem;
+            font-weight: 500;
+        }
+        .price-up { color: #27ae60; }
+        .price-down { color: #e74c3c; }
+        .form-control {
+            border-radius: 10px;
+            border: 2px solid #e9ecef;
+            padding: 12px 15px;
+        }
+        .form-control:focus {
+            border-color: #667eea;
+            box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
+        }
+        .btn-crypto {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border: none;
+            border-radius: 10px;
+            padding: 12px 30px;
+            font-weight: 600;
+            color: white;
+            transition: transform 0.2s;
+        }
+        .btn-crypto:hover {
+            transform: translateY(-2px);
+            color: white;
+        }
+        .crypto-icon {
+            width: 40px;
+            height: 40px;
+            margin-right: 10px;
+        }
+    </style>
 </head>
 
 <body>
     <!-- Navigation-->
-    <nav class="navbar navbar-expand-lg navbar-light" id="mainNav">
-        <div class="container px-4 px-lg-5">
-            <a class="navbar-brand" href="/">Home</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive"
-                aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-                Menu
-                <i class="fas fa-bars"></i>
+    <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #2c3e50;">
+        <div class="container">
+            <a class="navbar-brand" href="/">
+                <i class="fab fa-bitcoin me-2"></i>CryptoPredict
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive">
+                <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarResponsive">
-                <ul class="navbar-nav ms-auto py-4 py-lg-0">
-                    <!--                        <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="index.html">Home</a></li>-->
-                    <!--                        <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="about.html">About</a></li>-->
-                    <!--                        <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="post.html">Sample Post</a></li>-->
-                    <!--                        <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="contact.html">Contact</a></li>-->
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#dashboard"><i class="fas fa-chart-line me-1"></i>Dashboard</a>
+                    </li>
                 </ul>
             </div>
         </div>
     </nav>
-    <!-- Page Header-->
-    <header class="masthead" style="background-image: url('static/assets/img/wine.jpg')">
-        <div class="container position-relative px-4 px-lg-5">
-            <div class="row gx-4 gx-lg-5 justify-content-center">
-                <div class="col-md-10 col-lg-8 col-xl-7">
-                    <div class="site-heading">
-                        <h1>Wine Quality Prediction</h1>
-                        <span class="subheading">A Wine Quality Checking Web App</span>
+
+    <!-- Hero Section -->
+    <header class="crypto-header text-center">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <h1 class="display-4 mb-3">🚀 CryptoPredict AI</h1>
+                    <p class="lead mb-4">Advanced Machine Learning & Deep Learning for Cryptocurrency Price Prediction</p>
+                    <div class="d-flex justify-content-center gap-3">
+                        <span class="badge bg-light text-dark fs-6">Random Forest ML</span>
+                        <span class="badge bg-light text-dark fs-6">PyTorch Neural Networks</span>
+                        <span class="badge bg-light text-dark fs-6">Real-time Data</span>
+                        <span class="badge bg-light text-dark fs-6">Technical Analysis</span>
                     </div>
                 </div>
             </div>
@@ -55,179 +112,956 @@
     </header>
 
 
-    <!-- Main Content-->
-    <div class="container px-4 px-lg-5">
-
-        <!DOCTYPE html>
-        <html>
-
-        <head>
-            <meta charset="utf-8">
-            <title>Form-v9 by Colorlib</title>
-            <!-- Mobile Specific Metas -->
-            <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-            <!-- Font-->
-            <link rel="stylesheet" type="text/css" href="static/css2/nunito-font.css">
-            <!-- Main Style Css -->
-            <link rel="stylesheet" href="static/css2/style.css" />
-        </head>
-
-        <body class="form-v9">
-            <div class="page-content">
-                <div class="form-v9-content" style="background-image: url('static/assets/img/form-v9.jpg')">
-                    <form class="form-detail" action="/predict" method="post">
-                        <h2>Please Fill The Information</h2>
-                        <div class="form-row-total">
-
-                            <div class="form-row">
-                                <label for="fixed_acidity"> Fixed Acidity:</label>
-                                <input type="text" name="fixed_acidity" id="fixed_acidity" class="input-text"
-                                    placeholder="fixed_acidity" required>
-                            </div>
-
-                            <div class="form-row">
-                                <label for="volatile_acidity"> Volatile Acidity:</label>
-                                <input type="text" name="volatile_acidity" id="volatile_acidity" class="input-text"
-                                    placeholder="volatile_acidity" required>
-                            </div>
-
+    <!-- Live Crypto Dashboard -->
+    <section id="dashboard" class="py-5 bg-light">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2><i class="fas fa-chart-line me-2"></i>Live Crypto Dashboard</h2>
+                <p class="text-muted">Real-time cryptocurrency prices and market data</p>
+            </div>
+            
+            <div class="row" id="crypto-cards">
+                <!-- Crypto cards will be populated by JavaScript -->
+            </div>
+            
+            <!-- Price Chart -->
+            <div class="crypto-card mt-4">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h3><i class="fas fa-chart-area me-2"></i>Price Chart with AI Predictions</h3>
+                    <button id="refresh-predictions" class="btn btn-sm btn-outline-primary">
+                        <i class="fas fa-sync-alt me-1"></i>Refresh Predictions
+                    </button>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label class="form-label small text-muted">Cryptocurrency</label>
+                        <select id="chart-crypto" class="form-select">
+                            <option value="solana">Solana (SOL)</option>
+                        </select>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label small text-muted">AI Predictions</label>
+                        <div class="form-check form-switch d-flex align-items-center mt-2">
+                            <input class="form-check-input me-2" type="checkbox" id="show-predictions" checked>
+                            <label class="form-check-label" for="show-predictions">
+                                🤖 Show Next 5-Min Prediction
+                            </label>
                         </div>
-
-
-                        <div class="form-row-total">
-
-                            <div class="form-row">
-                                <label for="citric_acid"> Citric Acid:</label>
-                                <input type="text" name="citric_acid" id="citric_acid" class="input-text"
-                                    placeholder="citric_acid" required>
-                            </div>
-
-
-                            <div class="form-row">
-                                <label for="residual_sugar"> Residual Sugar:</label>
-                                <input type="text" name="residual_sugar" id="residual_sugar" class="input-text"
-                                    placeholder="residual_sugar" required>
-                            </div>
-
-                        </div>
-
-
-                        <div class="form-row-total">
-
-                            <div class="form-row">
-                                <label for="chlorides"> Chlorides:</label>
-                                <input type="text" name="chlorides" id="chlorides" class="input-text"
-                                    placeholder="chlorides" required>
-                            </div>
-
-                            <div class="form-row">
-                                <label for="free_sulfur_dioxide"> Free Sulfur Dioxide:</label>
-                                <input type="text" name="free_sulfur_dioxide" id="free_sulfur_dioxide"
-                                    class="input-text" placeholder="free_sulfur_dioxide" required>
-                            </div>
-
-                        </div>
-
-
-                        <div class="form-row-total">
-
-                            <div class="form-row">
-                                <label for="total_sulfur_dioxide"> Total Sulfur Dioxide:</label>
-                                <input type="text" name="total_sulfur_dioxide" id="total_sulfur_dioxide"
-                                    class="input-text" placeholder="total_sulfur_dioxide" required>
-                            </div>
-
-                            <div class="form-row">
-                                <label for="density"> Density:</label>
-                                <input type="text" name="density" id="density" class="input-text" placeholder="density"
-                                    required>
-                            </div>
-
-                        </div>
-
-
-                        <div class="form-row-total">
-
-                            <div class="form-row">
-                                <label for="pH"> pH:</label>
-                                <input type="text" name="pH" id="pH" class="input-text" placeholder="pH" required>
-                            </div>
-
-                            <div class="form-row">
-                                <label for="sulphates"> Sulphates:</label>
-                                <input type="text" name="sulphates" id="sulphates" class="input-text"
-                                    placeholder="sulphates" required>
-                            </div>
-
-                        </div>
-
-
-                        <div class="form-row-total">
-
-                            <div class="form-row">
-                                <label for="alcohol"> Alcohol:</label>
-                                <input type="text" name="alcohol" id="alcohol" class="input-text" placeholder="alcohol"
-                                    required>
-                            </div>
-
-
-                        </div>
-
-
-                        <div class="form-row-last">
-                            <input type="submit" name="register" class="register" value="Predict">
-                        </div>
-                    </form>
+                    </div>
+                </div>
+                <div class="mb-2">
+                    <small class="text-muted">
+                        <span class="badge bg-primary me-2">📊 Historical Data</span>
+                        <span class="badge bg-danger me-2">🔮 Ensemble Prediction (5min)</span>
+                        <span class="badge bg-success me-2">🌲 RF Future (5min)</span>
+                        <span class="badge bg-info me-2">🧠 LSTM Future (5min)</span>
+                        <span id="chart-info" class="text-muted">Loading chart data...</span>
+                    </small>
+                </div>
+                <div style="position: relative; height: 400px; width: 100%;">
+                    <canvas id="priceChart"></canvas>
                 </div>
             </div>
-        </body><!-- This templates was made by Colorlib (https://colorlib.com) -->
 
-        </html>
+            <!-- Model Predictions Comparison -->
+            <div class="crypto-card mt-4">
+                <h3 class="mb-4"><i class="fas fa-brain me-2"></i>AI Model Predictions (5-Minute Ahead)</h3>
+                <div class="row" id="predictions-display">
+                    <!-- Random Forest Prediction -->
+                    <div class="col-md-4">
+                        <div class="card border-success h-100">
+                            <div class="card-body text-center">
+                                <h5 class="card-title text-success"><i class="fas fa-tree me-2"></i>Random Forest</h5>
+                                <div class="price-display text-success" id="rf-prediction">$--</div>
+                                <div class="mt-2">
+                                    <span class="badge bg-success" id="rf-change">--</span>
+                                    <span class="badge bg-light text-dark" id="rf-confidence">--</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
-    </div>
+                    <!-- LSTM Prediction -->
+                    <div class="col-md-4">
+                        <div class="card border-info h-100">
+                            <div class="card-body text-center">
+                                <h5 class="card-title text-info"><i class="fas fa-network-wired me-2"></i>LSTM Neural Net</h5>
+                                <div class="price-display text-info" id="lstm-prediction">$--</div>
+                                <div class="mt-2">
+                                    <span class="badge bg-info" id="lstm-change">--</span>
+                                    <span class="badge bg-light text-dark" id="lstm-confidence">--</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
+                    <!-- Ensemble Prediction -->
+                    <div class="col-md-4">
+                        <div class="card border-primary h-100">
+                            <div class="card-body text-center">
+                                <h5 class="card-title text-primary"><i class="fas fa-layer-group me-2"></i>Ensemble (95/5)</h5>
+                                <div class="price-display text-primary" id="ensemble-prediction">$--</div>
+                                <div class="mt-2">
+                                    <span class="badge bg-primary" id="ensemble-change">--</span>
+                                    <span class="badge bg-light text-dark" id="ensemble-confidence">--</span>
+                                </div>
+                                <small class="text-muted mt-2 d-block">95% RF, 5% LSTM</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-3 text-center text-muted">
+                    <small><i class="fas fa-clock me-1"></i>Prediction Time: <span id="prediction-time">--</span></small>
+                </div>
+            </div>
 
-    <!-- Footer-->
-    <footer class="border-top">
-        <div class="container px-4 px-lg-5">
-            <div class="row gx-4 gx-lg-5 justify-content-center">
-                <div class="col-md-10 col-lg-8 col-xl-7">
-                    <ul class="list-inline text-center">
-                        <li class="list-inline-item">
-                            <a href="https://www.linkedin.com/in/boktiarahmed73/">
-                                <span class="fa-stack fa-lg">
-                                    <i class="fas fa-circle fa-stack-2x"></i>
-                                    <i class="fab fa-linkedin fa-stack-1x fa-inverse"></i>
-                                </span>
-                            </a>
-                        </li>
-                        <li class="list-inline-item">
-                            <a href="https://www.youtube.com/dswithbappy">
-                                <span class="fa-stack fa-lg">
-                                    <i class="fas fa-circle fa-stack-2x"></i>
-                                    <i class="fab fa-youtube fa-stack-1x fa-inverse"></i>
-                                </span>
-                            </a>
-                        </li>
-                        <li class="list-inline-item">
-                            <a href="https://github.com/entbappy">
-                                <span class="fa-stack fa-lg">
-                                    <i class="fas fa-circle fa-stack-2x"></i>
-                                    <i class="fab fa-github fa-stack-1x fa-inverse"></i>
-                                </span>
-                            </a>
-                        </li>
-                    </ul>
-                    <div class="small text-center text-muted fst-italic"></div>
-                    <div class="small text-center text-muted fst-italic"></div>
+            <!-- Model Accuracy Section -->
+            <div class="crypto-card mt-4">
+                <h3 class="mb-4"><i class="fas fa-bullseye me-2"></i>Model Performance Comparison</h3>
+                <div class="row">
+                    <!-- Random Forest Metrics -->
+                    <div class="col-md-6">
+                        <div class="card bg-success bg-opacity-10 border-success h-100">
+                            <div class="card-body">
+                                <h5 class="card-title text-success"><i class="fas fa-tree me-2"></i>Random Forest Metrics</h5>
+                                <div id="rf-metrics" class="mt-3">
+                                    <div class="d-flex justify-content-between align-items-center mb-2">
+                                        <span>R² Score:</span>
+                                        <span class="badge bg-success" id="rf-r2">Loading...</span>
+                                    </div>
+                                    <div class="d-flex justify-content-between align-items-center mb-2">
+                                        <span>RMSE:</span>
+                                        <span class="badge bg-success" id="rf-rmse">Loading...</span>
+                                    </div>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <span>MAE:</span>
+                                        <span class="badge bg-success" id="rf-mae">Loading...</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- LSTM Metrics -->
+                    <div class="col-md-6">
+                        <div class="card bg-info bg-opacity-10 border-info h-100">
+                            <div class="card-body">
+                                <h5 class="card-title text-info"><i class="fas fa-network-wired me-2"></i>LSTM Neural Net Metrics</h5>
+                                <div id="lstm-metrics" class="mt-3">
+                                    <div class="d-flex justify-content-between align-items-center mb-2">
+                                        <span>R² Score:</span>
+                                        <span class="badge bg-info" id="lstm-r2">Loading...</span>
+                                    </div>
+                                    <div class="d-flex justify-content-between align-items-center mb-2">
+                                        <span>RMSE:</span>
+                                        <span class="badge bg-info" id="lstm-rmse">Loading...</span>
+                                    </div>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <span>MAE:</span>
+                                        <span class="badge bg-info" id="lstm-mae">Loading...</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Comparison Summary -->
+                <div class="mt-3 text-center">
+                    <div class="alert alert-primary" id="model-comparison">
+                        <strong>🏆 Best Model:</strong> <span id="best-model">Loading...</span> | 
+                        <strong>Training Samples:</strong> <span id="training-samples">Loading...</span>
+                    </div>
+                </div>
+                
+                <!-- Real-time Accuracy -->
+                <div class="mt-3">
+                    <h5 class="mb-3"><i class="fas fa-clock me-2"></i>Real-Time Performance</h5>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <span>Last Prediction Error:</span>
+                                <span class="badge bg-warning" id="last-error">N/A</span>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <span>Average Error (Last 10):</span>
+                                <span class="badge bg-warning" id="avg-error">N/A</span>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <span>Predictions Tracked:</span>
+                                <span class="badge bg-secondary" id="predictions-count">0</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Legacy section removed -->
+            <div class="crypto-card mt-4" style="display: none;">
+                <h3 class="mb-4"><i class="fas fa-bullseye me-2"></i>Model Accuracy Metrics</h3>
+                <div class="row">
+                    <!-- Real-time Accuracy -->
+                    <div class="col-md-6">
+                        <div class="card bg-light border-0 h-100">
+                            <div class="card-body">
+                                <h5 class="card-title text-primary"><i class="fas fa-clock me-2"></i>Real-Time Performance</h5>
+                                <div id="realtime-accuracy" class="mt-3">
+                                    <div class="d-flex justify-content-between align-items-center mb-2">
+                                        <span>Last Prediction Error:</span>
+                                        <span class="badge bg-success" id="last-error">N/A</span>
+                                    </div>
+                                    <div class="d-flex justify-content-between align-items-center mb-2">
+                                        <span>Average Error (Last 10):</span>
+                                        <span class="badge bg-info" id="avg-error">N/A</span>
+                                    </div>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <span>Predictions Tracked:</span>
+                                        <span class="badge bg-secondary" id="predictions-count">0</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Training Metrics -->
+                    <div class="col-md-6">
+                        <div class="card bg-light border-0 h-100">
+                            <div class="card-body">
+                                <h5 class="card-title text-success"><i class="fas fa-graduation-cap me-2"></i>Training Metrics</h5>
+                                <div id="training-metrics" class="mt-3">
+                                    <div class="d-flex justify-content-between align-items-center mb-2">
+                                        <span>R² Score:</span>
+                                        <span class="badge bg-success" id="r2-score">Loading...</span>
+                                    </div>
+                                    <div class="d-flex justify-content-between align-items-center mb-2">
+                                        <span>RMSE:</span>
+                                        <span class="badge bg-info" id="rmse">Loading...</span>
+                                    </div>
+                                    <div class="d-flex justify-content-between align-items-center mb-2">
+                                        <span>MAE:</span>
+                                        <span class="badge bg-info" id="mae">Loading...</span>
+                                    </div>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <span>Training Samples:</span>
+                                        <span class="badge bg-secondary" id="training-samples">Loading...</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Accuracy Chart -->
+                <div class="mt-4">
+                    <h5 class="mb-3"><i class="fas fa-chart-line me-2"></i>Prediction Accuracy Over Time</h5>
+                    <div style="position: relative; height: 250px; width: 100%;">
+                        <canvas id="accuracyChart"></canvas>
+                    </div>
                 </div>
             </div>
         </div>
-    </footer>
-    <!-- Bootstrap core JS-->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"></script>
-    <!-- Core theme JS-->
-    <script src="static/js/scripts.js"></script>
+    </section>
+
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Custom JavaScript -->
+    <script>
+        // Crypto data and chart management
+        let priceChart = null;
+        const cryptoData = {
+            solana: { name: 'Solana', symbol: 'SOL', icon: '◎', color: '#9945ff' }
+        };
+
+        // Initialize dashboard
+        document.addEventListener('DOMContentLoaded', function() {
+            loadCryptoDashboard();
+            initializePriceChart();
+            setInterval(loadCryptoDashboard, 30000); // Update every 30 seconds
+        });
+
+        // Load live crypto data
+        async function loadCryptoDashboard() {
+            const cryptoCards = document.getElementById('crypto-cards');
+            cryptoCards.innerHTML = '';
+
+            for (const [id, info] of Object.entries(cryptoData)) {
+                try {
+                    const response = await fetch(`/get_crypto_data/${id}`);
+                    const data = await response.json();
+                    
+                    if (data[id]) {
+                        const cryptoInfo = data[id];
+                        const card = createCryptoCard(id, info, cryptoInfo);
+                        cryptoCards.appendChild(card);
+                    }
+                } catch (error) {
+                    console.error(`Error loading ${id}:`, error);
+                }
+            }
+        }
+
+        // Create crypto card element
+        function createCryptoCard(id, info, priceData) {
+            const card = document.createElement('div');
+            card.className = 'col-lg-4 col-md-6 mb-4';
+            
+            const changeClass = priceData.usd_24h_change >= 0 ? 'price-up' : 'price-down';
+            const changeIcon = priceData.usd_24h_change >= 0 ? '▲' : '▼';
+            
+            card.innerHTML = `
+                <div class="crypto-card h-100">
+                    <div class="d-flex align-items-center mb-3">
+                        <div class="crypto-icon d-flex align-items-center justify-content-center" 
+                             style="background: ${info.color}; color: white; border-radius: 50%; width: 50px; height: 50px; font-size: 1.5rem;">
+                            ${info.icon}
+                        </div>
+                        <div class="ms-3">
+                            <h5 class="mb-0">${info.name}</h5>
+                            <small class="text-muted">${info.symbol}</small>
+                        </div>
+                    </div>
+                    <div class="price-display mb-2">$${priceData.usd.toLocaleString()}</div>
+                    <div class="price-change ${changeClass}">
+                        ${changeIcon} ${priceData.usd_24h_change.toFixed(2)}% (24h)
+                    </div>
+                    <div class="mt-3">
+                        <small class="text-muted">Market Cap: $${(priceData.usd_market_cap || 0).toLocaleString()}</small>
+                    </div>
+                    <button class="btn btn-outline-primary btn-sm mt-2" onclick="fillLiveData('${id}')">
+                        <i class="fas fa-fill me-1"></i>Use for Prediction
+                    </button>
+                </div>
+            `;
+            return card;
+        }
+
+        // Initialize price chart
+        function initializePriceChart() {
+            const ctx = document.getElementById('priceChart').getContext('2d');
+            priceChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: [],
+                    datasets: [{
+                        label: 'Price (USD)',
+                        data: [],
+                        borderColor: '#667eea',
+                        backgroundColor: 'rgba(102, 126, 234, 0.1)',
+                        borderWidth: 2,
+                        fill: true,
+                        tension: 0.1, // Smooth lines
+                        pointRadius: 2,
+                        pointHoverRadius: 5
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    interaction: {
+                        intersect: false,
+                        mode: 'index'
+                    },
+                    plugins: {
+                        legend: {
+                            display: true,
+                            position: 'top'
+                        },
+                        tooltip: {
+                            backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                            titleColor: 'white',
+                            bodyColor: 'white',
+                            borderColor: '#667eea',
+                            borderWidth: 1,
+                            callbacks: {
+                                label: function(context) {
+                                    const label = context.dataset.label || '';
+                                    const value = typeof context.parsed.y === 'number' ? 
+                                                  context.parsed.y.toLocaleString('en-US', {
+                                                      style: 'currency',
+                                                      currency: 'USD',
+                                                      minimumFractionDigits: 2,
+                                                      maximumFractionDigits: 6
+                                                  }) : 'N/A';
+                                    return `${label}: ${value}`;
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        x: {
+                            display: true,
+                            grid: {
+                                color: 'rgba(0, 0, 0, 0.1)'
+                            },
+                            ticks: {
+                                maxRotation: 45,
+                                minRotation: 0
+                            }
+                        },
+                        y: {
+                            beginAtZero: false,
+                            display: true,
+                            grid: {
+                                color: 'rgba(0, 0, 0, 0.1)'
+                            },
+                            ticks: {
+                                callback: function(value) {
+                                    return new Intl.NumberFormat('en-US', {
+                                        style: 'currency',
+                                        currency: 'USD',
+                                        minimumFractionDigits: 2,
+                                        maximumFractionDigits: 6
+                                    }).format(value);
+                                }
+                            }
+                        }
+                    },
+                    elements: {
+                        point: {
+                            hitRadius: 10
+                        }
+                    }
+                }
+            });
+            
+            // Load initial chart data
+            updateChart('solana');
+            
+            // Chart selector events
+            document.getElementById('chart-crypto').addEventListener('change', function(e) {
+                updateChart(e.target.value);
+            });
+            
+            // Time range selector event
+            document.getElementById('chart-timerange').addEventListener('change', function(e) {
+                const selectedCrypto = document.getElementById('chart-crypto').value;
+                updateChart(selectedCrypto);
+            });
+            
+            // Refresh predictions button
+            document.getElementById('refresh-predictions').addEventListener('click', function() {
+                const selectedCrypto = document.getElementById('chart-crypto').value;
+                updateChart(selectedCrypto);
+            });
+            
+            // Show/hide predictions toggle
+            document.getElementById('show-predictions').addEventListener('change', function(e) {
+                const showPredictions = e.target.checked;
+                if (priceChart.data.datasets.length > 1) {
+                    // Toggle current ensemble prediction
+                    priceChart.data.datasets[1].hidden = !showPredictions;
+                }
+                if (priceChart.data.datasets.length > 2) {
+                    // Toggle RF past predictions
+                    priceChart.data.datasets[2].hidden = !showPredictions;
+                }
+                if (priceChart.data.datasets.length > 3) {
+                    // Toggle LSTM past predictions
+                    priceChart.data.datasets[3].hidden = !showPredictions;
+                }
+                priceChart.update();
+            });
+            
+            // Auto-refresh and fine-tune every 5 minutes
+            let lastPrediction = null;
+            setInterval(async () => {
+                const selectedCrypto = document.getElementById('chart-crypto').value;
+                
+                // If we have a previous prediction, check actual price and fine-tune
+                if (lastPrediction) {
+                    try {
+                        const response = await fetch(`/get_crypto_data/${selectedCrypto}`);
+                        const data = await response.json();
+                        const actualPrice = data.data[selectedCrypto].usd;
+                        
+                        // Send fine-tuning request
+                        await fetch('/finetune_model', {
+                            method: 'POST',
+                            headers: {'Content-Type': 'application/json'},
+                            body: JSON.stringify({
+                                crypto_id: selectedCrypto,
+                                predicted_price: lastPrediction.price,
+                                actual_price: actualPrice
+                            })
+                        });
+                        console.log('✅ Model fine-tuned with actual price data');
+                    } catch (error) {
+                        console.error('❌ Error fine-tuning model:', error);
+                    }
+                }
+                
+                // Update chart and get new prediction
+                updateChart(selectedCrypto);
+            }, 300000); // 5 minutes
+        }
+
+        // Update chart with crypto data and predictions
+        async function updateChart(cryptoId) {
+            console.log(`🔄 Updating chart for ${cryptoId}...`);
+            
+            try {
+                // Fetch 5-minute granular data for last 4 hours
+                const histResponse = await fetch(`/get_5min_data/${cryptoId}`);
+                const histData = await histResponse.json();
+                
+                const labels = [];
+                const prices = [];
+                const now = new Date();
+                
+                console.log('📊 Historical data response:', histData);
+                
+                // Process historical data with improved error handling
+                if (histData.error) {
+                    console.error('❌ API Error:', histData.error);
+                    // Show fallback data with error message
+                    showFallbackData(labels, prices, now);
+                    
+                    // Update chart info with error
+                    const chartInfo = document.getElementById('chart-info');
+                    if (chartInfo) {
+                        chartInfo.textContent = `Error: ${histData.error} - Showing sample data`;
+                        chartInfo.className = 'text-danger';
+                    }
+                } else if (histData.prices && histData.prices.length > 0) {
+                    console.log(`📈 Processing ${histData.prices.length} 5-minute price points (last 4 hours)`);
+                    
+                    // Process all 5-minute price data (no sampling needed for 48 points)
+                    histData.prices.forEach((pricePoint, index) => {
+                        const [timestamp, price] = pricePoint;
+                        const time = new Date(timestamp);
+                        
+                        // Validate timestamp and price
+                        if (isValidDate(time) && typeof price === 'number' && price > 0) {
+                            // Format as HH:MM for 5-minute intervals
+                            const label = time.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+                            labels.push(label);
+                            prices.push(price);
+                        }
+                    });
+                    
+                    if (prices.length === 0) {
+                        console.log('⚠️ No valid price data after processing');
+                        showFallbackData(labels, prices, now);
+                    } else {
+                        console.log(`💰 Processed ${prices.length} 5-minute intervals`);
+                        console.log(`💰 Price range: $${Math.min(...prices).toFixed(6)} - $${Math.max(...prices).toFixed(6)}`);
+                        
+                        // Update chart info
+                        const minPrice = Math.min(...prices);
+                        const maxPrice = Math.max(...prices);
+                        const chartInfo = document.getElementById('chart-info');
+                        if (chartInfo) {
+                            chartInfo.textContent = `5-minute intervals - Last 4 hours (${prices.length} points): $${minPrice.toFixed(2)} - $${maxPrice.toFixed(2)}`;
+                        }
+                    }
+                } else {
+                    console.log('⚠️ No historical data available, using fallback');
+                    showFallbackData(labels, prices, now);
+                    
+                    // Update chart info for fallback
+                    const chartInfo = document.getElementById('chart-info');
+                    if (chartInfo) {
+                        chartInfo.textContent = 'Showing sample data - API data unavailable';
+                        chartInfo.className = 'text-warning';
+                    }
+                }
+                
+                // Helper function for fallback data
+                function showFallbackData(labels, prices, now) {
+                    labels.length = 0;
+                    prices.length = 0;
+                    // Create sample data for the last 24 hours
+                    const basePrice = 100; // Default base price
+                    for (let i = 23; i >= 0; i--) {
+                        const time = new Date(now - i * 60 * 60 * 1000);
+                        labels.push(time.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}));
+                        // Generate realistic-looking sample data with some volatility
+                        const variation = (Math.random() - 0.5) * 0.1; // ±5% variation
+                        prices.push(basePrice * (1 + variation * (i / 24))); 
+                    }
+                    console.log('📊 Using fallback sample data');
+                }
+                
+                // Helper function to validate dates
+                function isValidDate(date) {
+                    return date instanceof Date && !isNaN(date.getTime()) && 
+                           date.getFullYear() > 2000 && date.getFullYear() < 2030;
+                }
+                
+                // Fetch AI predictions for next 5 minutes
+                console.log('🤖 Fetching AI predictions...');
+                const predResponse = await fetch(`/get_price_predictions/${cryptoId}`);
+                const predData = await predResponse.json();
+                
+                console.log('🔮 Prediction response:', predData);
+                
+                let predictionLabels = [];
+                let predictionPrices = [];
+                let rfPredictionPrices = [];
+                let lstmPredictionPrices = [];
+                
+                if (predData.error) {
+                    console.log('❌ Prediction error:', predData.error);
+                } else if (predData.predictions) {
+                    // Update prediction display cards
+                    const pred = predData.predictions;
+                    const currentPrice = predData.current_price;
+                    
+                    // Random Forest
+                    document.getElementById('rf-prediction').textContent = `$${pred.random_forest.price.toFixed(6)}`;
+                    document.getElementById('rf-change').textContent = `${pred.random_forest.change_percent > 0 ? '+' : ''}${pred.random_forest.change_percent.toFixed(3)}%`;
+                    document.getElementById('rf-change').className = pred.random_forest.change_percent > 0 ? 'badge bg-success' : 'badge bg-danger';
+                    document.getElementById('rf-confidence').textContent = `Confidence: ${(pred.random_forest.confidence * 100).toFixed(0)}%`;
+                    
+                    // LSTM
+                    document.getElementById('lstm-prediction').textContent = `$${pred.lstm.price.toFixed(6)}`;
+                    document.getElementById('lstm-change').textContent = `${pred.lstm.change_percent > 0 ? '+' : ''}${pred.lstm.change_percent.toFixed(3)}%`;
+                    document.getElementById('lstm-change').className = pred.lstm.change_percent > 0 ? 'badge bg-success' : 'badge bg-danger';
+                    document.getElementById('lstm-confidence').textContent = `Confidence: ${(pred.lstm.confidence * 100).toFixed(0)}%`;
+                    
+                    // Ensemble
+                    document.getElementById('ensemble-prediction').textContent = `$${pred.ensemble.price.toFixed(6)}`;
+                    document.getElementById('ensemble-change').textContent = `${pred.ensemble.change_percent > 0 ? '+' : ''}${pred.ensemble.change_percent.toFixed(3)}%`;
+                    document.getElementById('ensemble-change').className = pred.ensemble.change_percent > 0 ? 'badge bg-success' : 'badge bg-danger';
+                    document.getElementById('ensemble-confidence').textContent = `Confidence: ${(pred.ensemble.confidence * 100).toFixed(0)}%`;
+                    
+                    // Update prediction time
+                    const predTime = new Date(pred.timestamp);
+                    document.getElementById('prediction-time').textContent = predTime.toLocaleTimeString();
+                    
+                    // For chart: create separate predictions for all models
+                    console.log(`🎯 Processing 5-min predictions (RF, LSTM, Ensemble)`);
+                    const currentTime = new Date();
+                    predictionLabels = [
+                        currentTime.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}),
+                        predTime.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})
+                    ];
+                    
+                    // Ensemble prediction
+                    predictionPrices = [prices[prices.length - 1], pred.ensemble.price];
+                    
+                    // Random Forest prediction
+                    rfPredictionPrices = [prices[prices.length - 1], pred.random_forest.price];
+                    
+                    // LSTM prediction
+                    lstmPredictionPrices = [prices[prices.length - 1], pred.lstm.price];
+                    
+                    console.log(`💡 RF: $${currentPrice.toFixed(2)} -> $${pred.random_forest.price.toFixed(2)}`);
+                    console.log(`🧠 LSTM: $${currentPrice.toFixed(2)} -> $${pred.lstm.price.toFixed(2)}`);
+                    console.log(`🤝 Ensemble: $${currentPrice.toFixed(2)} -> $${pred.ensemble.price.toFixed(2)}`);
+                } else {
+                    console.log('⚠️ No prediction data available');
+                }
+                
+                // Combine labels for chart
+                const allLabels = [...labels, ...predictionLabels.slice(1)]; // Avoid duplicate current time
+                
+                // Update chart datasets
+                priceChart.data.labels = allLabels;
+                console.log(`📊 Chart labels: ${allLabels.length} total`);
+                
+                // Historical prices dataset  
+                const histChartData = [...prices, ...new Array(predictionLabels.length - 1).fill(null)];
+                priceChart.data.datasets[0].data = histChartData;
+                priceChart.data.datasets[0].label = `${cryptoData[cryptoId].name} Historical Price`;
+                priceChart.data.datasets[0].borderColor = cryptoData[cryptoId].color;
+                priceChart.data.datasets[0].backgroundColor = cryptoData[cryptoId].color + '20';
+                
+                console.log(`💰 Historical dataset: ${prices.length} prices`);
+                
+                // Ensemble AI Prediction dataset (current prediction)
+                if (priceChart.data.datasets.length < 2) {
+                    console.log('🆕 Creating ensemble prediction dataset');
+                    priceChart.data.datasets.push({
+                        label: `${cryptoData[cryptoId].name} Ensemble Prediction (5min)`,
+                        data: [],
+                        borderColor: '#ff6b6b',
+                        backgroundColor: '#ff6b6b20',
+                        borderDash: [5, 5],
+                        borderWidth: 3,
+                        fill: false,
+                        pointStyle: 'triangle',
+                        pointRadius: 6,
+                        hidden: false
+                    });
+                }
+                
+                // RF Future Predictions dataset
+                if (priceChart.data.datasets.length < 3) {
+                    console.log('🆕 Creating RF future predictions dataset');
+                    priceChart.data.datasets.push({
+                        label: `${cryptoData[cryptoId].name} RF Future (5min)`,
+                        data: [],
+                        borderColor: '#27ae60',
+                        backgroundColor: '#27ae6020',
+                        borderDash: [3, 3],
+                        borderWidth: 2,
+                        fill: false,
+                        showLine: true,
+                        spanGaps: true,
+                        tension: 0.3,
+                        pointStyle: 'rect',
+                        pointRadius: 3,
+                        pointHoverRadius: 5,
+                        hidden: false
+                    });
+                }
+                
+                // LSTM Future Predictions dataset
+                if (priceChart.data.datasets.length < 4) {
+                    console.log('🆕 Creating LSTM future predictions dataset');
+                    priceChart.data.datasets.push({
+                        label: `${cryptoData[cryptoId].name} LSTM Future (5min)`,
+                        data: [],
+                        borderColor: '#3498db',
+                        backgroundColor: '#3498db20',
+                        borderDash: [3, 3],
+                        borderWidth: 2,
+                        fill: false,
+                        showLine: true,
+                        spanGaps: true,
+                        tension: 0.3,
+                        pointStyle: 'circle',
+                        pointRadius: 3,
+                        pointHoverRadius: 5,
+                        hidden: false
+                    });
+                }
+                
+                // Fill prediction data for all three datasets
+                const predChartData = [...new Array(prices.length - 1).fill(null), ...predictionPrices];
+                const rfChartData = [...new Array(prices.length - 1).fill(null), ...rfPredictionPrices];
+                const lstmChartData = [...new Array(prices.length - 1).fill(null), ...lstmPredictionPrices];
+                
+                // Update ensemble prediction
+                priceChart.data.datasets[1].data = predChartData;
+                priceChart.data.datasets[1].label = `${cryptoData[cryptoId].name} Ensemble Prediction (5min)`;
+                priceChart.data.datasets[1].hidden = !document.getElementById('show-predictions').checked;
+                
+                // Update RF Future Prediction
+                priceChart.data.datasets[2].data = rfChartData;
+                priceChart.data.datasets[2].label = `${cryptoData[cryptoId].name} RF Future (5min)`;
+                priceChart.data.datasets[2].hidden = !document.getElementById('show-predictions').checked;
+                
+                // Update LSTM Future Prediction
+                priceChart.data.datasets[3].data = lstmChartData;
+                priceChart.data.datasets[3].label = `${cryptoData[cryptoId].name} LSTM Future (5min)`;
+                priceChart.data.datasets[3].hidden = !document.getElementById('show-predictions').checked;
+                
+                console.log(`🔮 Current prediction: ${predictionPrices.length} points`);
+                console.log(`📈 Dataset 0 (historical): ${priceChart.data.datasets[0].data.filter(x => x !== null).length} points`);
+                
+                priceChart.update();
+                console.log('✅ Chart updated successfully');
+                
+                // Show prediction summary and save for fine-tuning
+                if (predData.predictions && predData.predictions.length > 0) {
+                    const nextPred = predData.predictions[0]; // Single 5-min prediction
+                    lastPrediction = nextPred; // Save globally
+                    const currentPrice = predData.current_price;
+                    const change = ((nextPred.price - currentPrice) / currentPrice * 100).toFixed(2);
+                    const direction = change > 0 ? '📈' : '📉';
+                    
+                    console.log(`🤖 AI Prediction for ${cryptoData[cryptoId].name}:`);
+                    console.log(`   Current: $${currentPrice.toFixed(6)}`);
+                    console.log(`   5-Min: $${nextPred.price.toFixed(6)} (${change > 0 ? '+' : ''}${change}%) ${direction}`);
+                }
+                
+            } catch (error) {
+                console.error('Error updating chart:', error);
+                // Fallback to sample data
+                const labels = [];
+                const prices = [];
+                const now = new Date();
+                
+                for (let i = 11; i >= 0; i--) {
+                    const time = new Date(now - i * 60 * 60 * 1000);
+                    labels.push(time.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}));
+                    prices.push(Math.random() * 100 + 200);
+                }
+                
+                priceChart.data.labels = labels;
+                priceChart.data.datasets[0].data = prices;
+                priceChart.data.datasets[0].label = `${cryptoData[cryptoId].name} Price (Sample)`;
+                priceChart.update();
+            }
+        }
+
+        // Load and display model accuracy metrics
+        let accuracyChart = null;
+        
+        async function loadModelMetrics() {
+            try {
+                const response = await fetch('/get_model_metrics');
+                const metrics = await response.json();
+                
+                console.log('📊 Model Metrics:', metrics);
+                
+                // Update Random Forest metrics
+                if (metrics.random_forest) {
+                    const rf = metrics.random_forest;
+                    document.getElementById('rf-r2').textContent = (rf.r2_score * 100).toFixed(2) + '%';
+                    document.getElementById('rf-rmse').textContent = `$${rf.rmse.toFixed(4)}`;
+                    document.getElementById('rf-mae').textContent = `$${rf.mae.toFixed(4)}`;
+                }
+                
+                // Update LSTM metrics
+                if (metrics.lstm) {
+                    const lstm = metrics.lstm;
+                    const r2Percent = (lstm.r2_score * 100).toFixed(2);
+                    const r2Element = document.getElementById('lstm-r2');
+                    r2Element.textContent = r2Percent + '%';
+                    
+                    // Highlight poor performance with warning color
+                    if (lstm.r2_score < 0) {
+                        r2Element.className = 'badge bg-danger';
+                        r2Element.title = 'Negative R² indicates poor model performance';
+                    } else if (lstm.r2_score < 0.5) {
+                        r2Element.className = 'badge bg-warning';
+                    } else {
+                        r2Element.className = 'badge bg-info';
+                    }
+                    
+                    document.getElementById('lstm-rmse').textContent = `$${lstm.rmse.toFixed(4)}`;
+                    document.getElementById('lstm-mae').textContent = `$${lstm.mae.toFixed(4)}`;
+                }
+                
+                // Update comparison
+                if (metrics.comparison && metrics.comparison.better_model) {
+                    let compText = metrics.comparison.better_model;
+                    if (metrics.comparison.note) {
+                        compText += ' (LSTM needs retraining)';
+                    }
+                    document.getElementById('best-model').textContent = compText;
+                    
+                    // Update ensemble weights display if note exists
+                    if (metrics.comparison.note && metrics.comparison.ensemble_weights) {
+                        const modelComp = document.getElementById('model-comparison');
+                        if (modelComp) {
+                            const rfWeight = (metrics.comparison.ensemble_weights.random_forest * 100).toFixed(0);
+                            const lstmWeight = (metrics.comparison.ensemble_weights.lstm * 100).toFixed(0);
+                            modelComp.innerHTML = `<strong>🏆 Best Model:</strong> ${compText} | 
+                                <strong>Ensemble Weights:</strong> RF ${rfWeight}% / LSTM ${lstmWeight}% | 
+                                <strong>Training Samples:</strong> <span id="training-samples">${metrics.training_samples || 'Loading...'}</span>`;
+                        }
+                    }
+                }
+                
+                if (metrics.training_samples && !metrics.comparison.note) {
+                    document.getElementById('training-samples').textContent = metrics.training_samples;
+                }
+                
+                // Update real-time performance
+                if (metrics.real_time_performance) {
+                    const rtp = metrics.real_time_performance;
+                    
+                    if (rtp.last_error !== undefined) {
+                        document.getElementById('last-error').textContent = `${rtp.last_error.toFixed(3)}%`;
+                        document.getElementById('last-error').className = rtp.last_error < 0.5 ? 'badge bg-success' : 'badge bg-warning';
+                    }
+                    
+                    if (rtp.avg_error_10 !== undefined) {
+                        document.getElementById('avg-error').textContent = `${rtp.avg_error_10.toFixed(3)}%`;
+                        document.getElementById('avg-error').className = rtp.avg_error_10 < 0.5 ? 'badge bg-success' : 'badge bg-warning';
+                    }
+                    
+                    if (rtp.predictions_tracked !== undefined) {
+                        document.getElementById('predictions-count').textContent = rtp.predictions_tracked;
+                    }
+                    
+                    // Update accuracy chart
+                    if (rtp.error_history && rtp.error_history.length > 0) {
+                        updateAccuracyChart(rtp.error_history);
+                    }
+                }
+                
+            } catch (error) {
+                console.error('Error loading model metrics:', error);
+            }
+        }
+        
+        function updateAccuracyChart(errorHistory) {
+            const ctx = document.getElementById('accuracyChart');
+            if (!ctx) return;
+            
+            // Create labels
+            const labels = errorHistory.map((_, i) => `Pred ${i + 1}`);
+            
+            if (accuracyChart) {
+                accuracyChart.destroy();
+            }
+            
+            accuracyChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Prediction Error %',
+                        data: errorHistory,
+                        borderColor: 'rgb(255, 99, 132)',
+                        backgroundColor: 'rgba(255, 99, 132, 0.1)',
+                        tension: 0.4,
+                        fill: true
+                    }, {
+                        label: 'Target (0.3% threshold)',
+                        data: new Array(errorHistory.length).fill(0.3),
+                        borderColor: 'rgb(75, 192, 192)',
+                        borderDash: [5, 5],
+                        borderWidth: 2,
+                        pointRadius: 0,
+                        fill: false
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: true,
+                            position: 'top'
+                        },
+                        title: {
+                            display: false
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: 'Error %'
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Load metrics on page load
+        loadModelMetrics();
+        
+        // Refresh metrics every 30 seconds
+        setInterval(loadModelMetrics, 30000);
+    </script>
 </body>
 
 </html>
