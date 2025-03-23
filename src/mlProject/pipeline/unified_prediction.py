@@ -61,8 +61,19 @@ class UnifiedPredictionPipeline:
         if model_type == 'traditional':
             self.model = joblib.load(Path('artifacts/model_trainer/model.joblib'))
             self.scaler = None
+            logger.info("✅ Loaded Random Forest model from artifacts/model_trainer/model.joblib")
         elif model_type in ['deep', 'deep_learning']:
-            self._load_deep_model()
+            try:
+                self._load_deep_model()
+                logger.info(f"✅ Loaded deep learning model (LSTM={self.is_lstm})")
+            except Exception as e:
+                logger.warning(f"⚠️  Deep learning model not found, falling back to Random Forest: {e}")
+                logger.warning("💡 To train deep learning model, run: python train_improved_dnn.py")
+                # Fall back to Random Forest
+                self.model = joblib.load(Path('artifacts/model_trainer/model.joblib'))
+                self.scaler = None
+                self.model_type = 'traditional'  # Switch to traditional mode
+                logger.info("✅ Using Random Forest model as fallback")
         else:
             raise ValueError("model_type must be either 'traditional', 'deep', or 'deep_learning'")
     
@@ -175,12 +186,14 @@ class UnifiedPredictionPipeline:
     def _predict_traditional(self, data):
         """Predict using traditional Random Forest model"""
         prediction = self.model.predict(data)
+        logger.info(f"Random Forest raw prediction: {prediction}")
         return prediction
     
     def _predict_deep(self, data):
         """Predict using deep learning model"""
         # Scale the data
         data_scaled = self.scaler.transform(data)
+        logger.info(f"Deep learning model type: {'LSTM' if self.is_lstm else 'DNN/NN'}")
         
         if self.is_lstm:
             # LSTM requires sequences
@@ -217,6 +230,7 @@ class UnifiedPredictionPipeline:
         with torch.no_grad():
             prediction = self.model(data_tensor).cpu().numpy().flatten()
         
+        logger.info(f"Deep learning raw prediction: {prediction}")
         return prediction
 
 

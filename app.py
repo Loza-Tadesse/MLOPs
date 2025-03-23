@@ -422,7 +422,7 @@ def _generate_ensemble_predictions(input_data, current_price, volatility, curren
     deep_predictions = []
     
     rng = np.random.default_rng(int(current_time.timestamp()))
-    for _ in range(3):  # 3 ensemble members
+    for i in range(3):  # 3 ensemble members
         noise = rng.random() * 0.0005 - 0.00025  # ±0.025% noise
         varied_input = input_data.copy()
         varied_input[0][0] = current_price * (1 + noise)
@@ -431,24 +431,43 @@ def _generate_ensemble_predictions(input_data, current_price, volatility, curren
             trad_pred = traditional_obj.predict(varied_input)
             if len(trad_pred) > 0 and not np.isnan(trad_pred[0]):
                 trad_predictions.append(float(trad_pred[0]))
-        except Exception:
-            pass
+                logger.info(f"Ensemble {i+1} - RF prediction: ${float(trad_pred[0]):.6f}")
+        except Exception as e:
+            logger.error(f"RF prediction failed: {e}")
         
         try:
             deep_pred = deep_obj.predict(varied_input)
             if len(deep_pred) > 0 and not np.isnan(deep_pred[0]):
                 deep_predictions.append(float(deep_pred[0]))
-        except Exception:
-            pass
+                logger.info(f"Ensemble {i+1} - LSTM/DNN prediction: ${float(deep_pred[0]):.6f}")
+        except Exception as e:
+            logger.error(f"LSTM/DNN prediction failed: {e}")
     
     # Calculate individual model predictions
     rf_price = np.median(trad_predictions) if trad_predictions else current_price
     lstm_price = np.median(deep_predictions) if deep_predictions else current_price
     
-    # Weighted ensemble: Random Forest R²=0.9999 vs LSTM R²=-0.0002 (poor performance)
-    # Use 95% Random Forest since LSTM is currently unreliable
+    # Log raw predictions for debugging
+    logger.info(f"Raw predictions - RF: ${rf_price:.6f}, LSTM: ${lstm_price:.6f}, Current: ${current_price:.6f}")
+    logger.info(f"RF change: {((rf_price - current_price) / current_price * 100):.4f}%, LSTM change: {((lstm_price - current_price) / current_price * 100):.4f}%")
+    
+    # Apply reasonable bounds based on volatility
+    price_change_24h = float(input_data[0][16])  # 24h change
+    adaptive_max = 0.02 * (1 + abs(price_change_24h) * 0.5)  # Increased from 0.005 to 0.02
+    adaptive_max = min(adaptive_max, 0.05)  # Cap at 5% instead of 1.5%
+    
+    # Clip predictions to reasonable bounds
+    rf_price_clipped = np.clip(rf_price, current_price * (1 - adaptive_max), current_price * (1 + adaptive_max))
+    lstm_price_clipped = np.clip(lstm_price, current_price * (1 - adaptive_max), current_price * (1 + adaptive_max))
+    
+    # Use the clipped prices for final output
+    rf_price = rf_price_clipped
+    lstm_price = lstm_price_clipped
+    
+    # Weighted ensemble: Random Forest R²=0.9999 vs LSTM (DNN/LSTM model)
+    # Adjust weights: 70% RF, 30% LSTM for more balanced predictions
     if trad_predictions and deep_predictions:
-        ensemble_price = 0.95 * rf_price + 0.05 * lstm_price  # 95% RF, 5% LSTM
+        ensemble_price = 0.7 * rf_price + 0.3 * lstm_price  # 70% RF, 30% LSTM
     elif trad_predictions:
         ensemble_price = rf_price
     elif deep_predictions:
@@ -456,15 +475,7 @@ def _generate_ensemble_predictions(input_data, current_price, volatility, curren
     else:
         ensemble_price = current_price
     
-    # Apply reasonable bounds based on volatility
-    price_change_24h = float(input_data[0][16])  # 24h change
-    adaptive_max = 0.005 * (1 + abs(price_change_24h) * 0.3)
-    adaptive_max = min(adaptive_max, 0.015)  # Cap at 1.5%
-    
-    # Clip predictions
-    rf_price = np.clip(rf_price, current_price * (1 - adaptive_max), current_price * (1 + adaptive_max))
-    lstm_price = np.clip(lstm_price, current_price * (1 - adaptive_max), current_price * (1 + adaptive_max))
-    ensemble_price = np.clip(ensemble_price, current_price * (1 - adaptive_max), current_price * (1 + adaptive_max))
+    logger.info(f"Clipped predictions - RF: ${rf_price:.6f}, LSTM: ${lstm_price:.6f}, Ensemble: ${ensemble_price:.6f}")
     
     pred_time = current_time + pd.Timedelta(minutes=5)
     
@@ -484,8 +495,8 @@ def _generate_ensemble_predictions(input_data, current_price, volatility, curren
             'price': float(ensemble_price),
             'change_percent': ((ensemble_price - current_price) / current_price) * 100,
             'confidence': 0.95 if (trad_predictions and deep_predictions) else 0.75,
-            'weight_rf': 0.95,
-            'weight_lstm': 0.05
+            'weight_rf': 0.7,
+            'weight_lstm': 0.3
         },
         'timestamp': pred_time.isoformat(),
         'interval': '+5min'
