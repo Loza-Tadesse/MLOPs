@@ -14,8 +14,8 @@ AI-powered Solana price prediction using machine learning.
 
 ```bash
 # Clone and setup
-git clone https://github.com/Loza-Tadesse/VinoPredict.git
-cd VinoPredict
+git clone https://github.com/Loza-Tadesse/SolPredict-AI.git
+cd SolPredict-AI
 pip install -r requirements.txt
 
 # Train models

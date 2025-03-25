@@ -82,10 +82,10 @@ class DeepModelEvaluation:
             
             # Make predictions
             with torch.no_grad():
-                predicted_qualities = model(test_x_tensor).cpu().numpy().flatten()
+                predictions = model(test_x_tensor).cpu().numpy().flatten()
             
             # Calculate metrics
-            (rmse, mae, r2) = self.eval_metrics(test_y, predicted_qualities)
+            (rmse, mae, r2) = self.eval_metrics(test_y, predictions)
             
             # Save metrics locally
             scores = {"rmse": rmse, "mae": mae, "r2": r2}
